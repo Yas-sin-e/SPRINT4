@@ -1,0 +1,147 @@
+<div class="container mt-4">
+  <h2>Ajouter un Employé :</h2>
+
+  <form [formGroup]="empForm" (ngSubmit)="addEmploye()">
+
+    <div hidden>
+      <label>ID Employé</label>
+      <input type="number" formControlName="idEmploye" class="form-control" readonly />
+    </div>
+
+    <!-- Nom -->
+    <div class="form-group mt-2">
+      <label>Nom</label>
+      <input type="text" formControlName="nomEmploye" class="form-control" />
+      <span *ngIf="empForm.get('nomEmploye')?.hasError('required') && empForm.get('nomEmploye')?.touched"
+        class="text-danger">
+        Nom obligatoire
+      </span>
+      <span *ngIf="empForm.get('nomEmploye')?.hasError('minlength') && empForm.get('nomEmploye')?.touched"
+        class="text-danger">
+        Le nom doit contenir au moins 3 caractères
+      </span>
+    </div>
+
+    <!-- Prénom -->
+    <div class="form-group mt-2">
+      <label>Prénom</label>
+      <input type="text" formControlName="prenomEmploye" class="form-control" />
+      <span *ngIf="empForm.get('prenomEmploye')?.hasError('required') && empForm.get('prenomEmploye')?.touched"
+        class="text-danger">
+        Prénom obligatoire
+      </span>
+    </div>
+
+    <!-- Poste -->
+    <div class="form-group mt-2">
+      <label>Poste</label>
+      <input type="text" formControlName="posteEmploye" class="form-control" />
+      <span *ngIf="empForm.get('posteEmploye')?.hasError('required') && empForm.get('posteEmploye')?.touched"
+        class="text-danger">
+        Poste obligatoire
+      </span>
+    </div>
+
+    <!-- Date d'embauche -->
+    <div class="form-group mt-2">
+      <label>Date d'embauche</label>
+      <input type="date" formControlName="dateEmbauche" class="form-control" />
+      <span *ngIf="empForm.get('dateEmbauche')?.hasError('required') && empForm.get('dateEmbauche')?.touched"
+        class="text-danger">
+        Date d'embauche obligatoire
+      </span>
+    </div>
+
+    <!-- Salaire -->
+    <div class="form-group mt-2">
+      <label>Salaire</label>
+      <input type="number" formControlName="salaire" class="form-control" />
+      <span *ngIf="empForm.get('salaire')?.hasError('required') && empForm.get('salaire')?.touched" class="text-danger">
+        Salaire obligatoire
+      </span>
+      <span *ngIf="empForm.get('salaire')?.hasError('min') && empForm.get('salaire')?.touched" class="text-danger">
+        Le salaire doit être supérieur à 0
+      </span>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group mt-2">
+      <label>Email</label>
+      <input type="email" formControlName="email" class="form-control" />
+      <span *ngIf="empForm.get('email')?.hasError('required') && empForm.get('email')?.touched" class="text-danger">
+        Email obligatoire
+      </span>
+      <span *ngIf="empForm.get('email')?.hasError('email') && empForm.get('email')?.touched" class="text-danger">
+        Format de l'email invalide
+      </span>
+    </div>
+
+    <!-- Téléphone -->
+    <div class="form-group mt-2">
+      <label>Téléphone</label>
+      <input type="text" formControlName="telephone" class="form-control" />
+      <span *ngIf="empForm.get('telephone')?.hasError('required') && empForm.get('telephone')?.touched"
+        class="text-danger">
+        Téléphone obligatoire
+      </span>
+      <span *ngIf="empForm.get('telephone')?.hasError('pattern') && empForm.get('telephone')?.touched"
+        class="text-danger">
+        Le numéro doit contenir exactement 8 chiffres
+      </span>
+    </div>
+
+    <!-- Adresse -->
+    <div class="form-group mt-2">
+      <label>Adresse</label>
+      <input type="text" formControlName="adresse" class="form-control" />
+      <span *ngIf="empForm.get('adresse')?.hasError('required') && empForm.get('adresse')?.touched" class="text-danger">
+        Adresse obligatoire
+      </span>
+    </div>
+
+    <!-- Grade -->
+    <div class="form-group mt-2">
+      <label>Grade-Niveau</label>
+      <select class="form-control" formControlName="idGra">
+        <option value="">-- Sélectionner un grade --</option>
+        <option *ngFor="let gra of grades" [value]="gra.idGraEmp">
+          {{ gra.nomGraEmp }} - {{ gra.niveau }}
+        </option>
+      </select>
+      <span *ngIf="empForm.get('idGra')?.hasError('required') && empForm.get('idGra')?.touched" class="text-danger">
+        Grade obligatoire
+      </span>
+    </div>
+
+    <!-- Section Image -->
+    <div class="form-group mt-3">
+      <label><strong>Image :</strong></label>
+
+      <!-- Input file caché -->
+      <input id="imagesInput" type="file" accept="image/*" (change)="onImageUpload($event)" style="display:none;">
+
+      <!-- Bouton pour ouvrir le sélecteur -->
+      <div class="mt-2">
+        <button type="button" (click)="triggerFileInput()" class="btn btn-primary">
+          Choisir une image
+        </button>
+      </div>
+
+      <!-- Zone de prévisualisation de l'image (une seule) -->
+      @if (currentPreview) {
+      <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+        <h6>Aperçu :</h6>
+        <img [src]="currentPreview" style="max-width: 300px; max-height: 200px; object-fit: contain;"
+          class="img-thumbnail">
+        <div class="mt-2">
+          <button type="button" (click)="removeImage()" class="btn btn-danger">
+            Supprimer
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3" [disabled]="empForm.invalid">Ajouter</button>
+  </form>
+</div>

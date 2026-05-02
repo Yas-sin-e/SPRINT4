@@ -1,0 +1,129 @@
+<div class="container mt-4" *ngIf="editForm">
+  <h2>Modifier un Employé :</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="updateEmploye()">
+
+    <div hidden>
+      <input type="number" formControlName="idEmploye" class="form-control" readonly />
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Nom</label>
+      <input type="text" formControlName="nomEmploye" class="form-control" />
+      <span *ngIf="editForm.get('nomEmploye')?.hasError('required') && editForm.get('nomEmploye')?.touched"
+        class="text-danger">Nom obligatoire</span>
+      <span *ngIf="editForm.get('nomEmploye')?.hasError('minlength') && editForm.get('nomEmploye')?.touched"
+        class="text-danger">Au moins 3 caractères</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Prénom</label>
+      <input type="text" formControlName="prenomEmploye" class="form-control" />
+      <span *ngIf="editForm.get('prenomEmploye')?.hasError('required') && editForm.get('prenomEmploye')?.touched"
+        class="text-danger">Prénom obligatoire</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Poste</label>
+      <input type="text" formControlName="posteEmploye" class="form-control" />
+      <span *ngIf="editForm.get('posteEmploye')?.hasError('required') && editForm.get('posteEmploye')?.touched"
+        class="text-danger">Poste obligatoire</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Date d'embauche</label>
+      <input type="date" formControlName="dateEmbauche" class="form-control" />
+      <span *ngIf="editForm.get('dateEmbauche')?.hasError('required') && editForm.get('dateEmbauche')?.touched"
+        class="text-danger">Date obligatoire</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Salaire</label>
+      <input type="number" formControlName="salaire" class="form-control" />
+      <span *ngIf="editForm.get('salaire')?.hasError('required') && editForm.get('salaire')?.touched"
+        class="text-danger">Salaire obligatoire</span>
+      <span *ngIf="editForm.get('salaire')?.hasError('min') && editForm.get('salaire')?.touched"
+        class="text-danger">Salaire doit être supérieur à 0</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Email</label>
+      <input type="email" formControlName="email" class="form-control" />
+      <span *ngIf="editForm.get('email')?.hasError('required') && editForm.get('email')?.touched"
+        class="text-danger">Email obligatoire</span>
+      <span *ngIf="editForm.get('email')?.hasError('email') && editForm.get('email')?.touched" class="text-danger">Email
+        invalide</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Téléphone</label>
+      <input type="text" formControlName="telephone" class="form-control" />
+      <span *ngIf="editForm.get('telephone')?.hasError('required') && editForm.get('telephone')?.touched"
+        class="text-danger">Téléphone obligatoire</span>
+      <span *ngIf="editForm.get('telephone')?.hasError('pattern') && editForm.get('telephone')?.touched"
+        class="text-danger">8 chiffres requis</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Adresse</label>
+      <input type="text" formControlName="adresse" class="form-control" />
+      <span *ngIf="editForm.get('adresse')?.hasError('required') && editForm.get('adresse')?.touched"
+        class="text-danger">Adresse obligatoire</span>
+    </div>
+
+    <div class="form-group mt-2">
+      <label>Grade-Niveau</label>
+      <select class="form-control" formControlName="idGra">
+        <option value="">-- Sélectionner un grade --</option>
+        <option *ngFor="let gra of grades" [value]="gra.idGraEmp">
+          {{ gra.nomGraEmp }} - {{ gra.niveau }}
+        </option>
+      </select>
+      <span *ngIf="editForm.get('idGra')?.hasError('required') && editForm.get('idGra')?.touched"
+        class="text-danger">Grade obligatoire</span>
+    </div>
+
+    <!-- Section Image -->
+    <div class="form-group mt-3">
+      <label><strong>Image :</strong></label>
+
+      <!-- Input file caché -->
+      <input id="imagesInput" type="file" accept="image/*" (change)="onImageUpload($event)" style="display:none;">
+
+      <!-- Bouton pour ouvrir le sélecteur -->
+      <div class="mt-2">
+        <button type="button" (click)="triggerFileInput()" class="btn btn-primary">
+          Choisir une image
+        </button>
+      </div>
+
+      <!-- Zone de prévisualisation de l'image (une seule) -->
+      @if (currentPreview) {
+      <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+        <h6>Aperçu :</h6>
+        <img [src]="currentPreview" style="max-width: 300px; max-height: 200px; object-fit: contain;"
+          class="img-thumbnail">
+        <div class="mt-2">
+          <button type="button" (click)="removeImage()" class="btn btn-danger">
+            Supprimer
+          </button>
+        </div>
+      </div>
+      }
+
+      <!-- Image existante -->
+      @if (!currentPreview && existingImageUrl) {
+      <div class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+        <h6>Image actuelle :</h6>
+        <img [src]="existingImageUrl" style="max-width: 300px; max-height: 200px; object-fit: contain;"
+          class="img-thumbnail">
+      </div>
+      }
+    </div>
+
+    <div class="mt-3">
+      <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">Modifier</button>
+    </div>
+
+  </form>
+</div>

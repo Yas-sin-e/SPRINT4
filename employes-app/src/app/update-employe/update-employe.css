@@ -1,0 +1,152 @@
+/* Image Section Styling */
+.image-section {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Large Image Preview Area */
+.image-preview-area {
+  width: 100%;
+  height: 300px;
+  background-color: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.empty-preview {
+  color: #999;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* File Chooser */
+.file-chooser-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.file-chooser-label {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.file-chooser-label:hover {
+  text-decoration: underline;
+}
+
+.file-status {
+  color: #666;
+  font-size: 14px;
+  flex: 1;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* Add Image Button */
+.btn-add-image {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-add-image:hover {
+  background-color: #218838;
+}
+
+.btn-add-image:active {
+  background-color: #1e7e34;
+}
+
+/* Images Gallery Section */
+.images-section {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.images-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.images-gallery-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fafafa;
+  padding: 1rem;
+}
+
+.gallery-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Individual Image Thumbnail */
+.image-thumb-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.image-thumb {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+/* Delete Image Button */
+.btn-delete-image {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete-image:hover {
+  background-color: #c82333;
+}
+
+.btn-delete-image:active {
+  background-color: #bd2130;
+}
+

@@ -1,0 +1,88 @@
+<div class="container mt-3">
+  <!-- Recherche -->
+  <form class="form-inline mb-3">
+    <div class="form-group">
+      <label class="me-2">Nom employé :</label>
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" name="searchTerm"
+        placeholder="Tapez un nom ou prénom" />
+    </div>
+  </form>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <h4 class="mb-3 text-center">Liste des Employés</h4>
+
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>N°</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Poste</th>
+            <th>Grade</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container *ngFor="let employe of filteredEmployes; let i = index">
+            <!-- Ligne principale -->
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ employe.nomEmploye }}</td>
+              <td>{{ employe.prenomEmploye }}</td>
+              <td>{{ employe.posteEmploye }}</td>
+              <td>{{ employe.grade.nomGraEmp }} - {{ employe.grade.niveau }}</td>
+              <td>
+                @if (employe.imagePath) {
+                <img [src]="apiURL+'/image/loadfromFS/'+employe.idEmploye"
+                  style="height: 60px; width: 80px; object-fit: contain; background-color: #f5f5f5;" class="rounded"
+                  alt="Photo">
+                } @else {
+                <span class="text-muted">Aucune</span>
+                }
+              </td>
+              <td>
+                <button class="btn btn-info btn-sm me-2" (click)="employe.showDetails = !employe.showDetails">
+                  {{ employe.showDetails ? 'Masquer' : 'Plus d\'infos' }}
+                </button>
+                @if(authService.isAdmin()){
+                <button class="btn btn-success btn-sm me-2" [routerLink]="['/updateEmploye', employe.idEmploye]">
+                  Modifier
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="supprimerEmploye(employe)">
+                  Supprimer
+                </button>
+                }
+
+              </td>
+            </tr>
+
+            <!-- Détails cachés -->
+            <tr *ngIf="employe.showDetails" class="bg-light">
+              <td colspan="6">
+                <div class="text-start p-3">
+                  <p><strong>Date d'embauche :</strong> {{ employe.dateEmbauche | date:'dd/MM/yyyy' }}</p>
+                  <p><strong>Salaire :</strong> {{ employe.salaire }} DT</p>
+                  <p><strong>Email :</strong> {{ employe.email }}</p>
+                  <p><strong>Téléphone :</strong> {{ employe.telephone }}</p>
+                  <p><strong>Adresse :</strong> {{ employe.adresse }}</p>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+
+          <!-- Aucun employé -->
+          <tr *ngIf="filteredEmployes.length === 0">
+            <td colspan="6" class="text-center text-muted">Aucun employé trouvé.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="text-start mt-2" *ngIf="filteredEmployes.length > 0">
+        <strong>Total d'éléments :</strong> {{ filteredEmployes.length }}
+      </div>
+    </div>
+  </div>
+</div>
