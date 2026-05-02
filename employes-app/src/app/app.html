@@ -1,0 +1,54 @@
+<html>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" (click)="closeDropdowns()">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Gestion des employe</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/employe" (click)="closeDropdowns()">Home</a>
+        </li>
+
+        <li class="nav-item dropdown" (click)="$event.stopPropagation()">
+          <a class="nav-link dropdown-toggle" [class.show]="employeesDropdownOpen" (click)="toggleEmployeesDropdown()"
+            role="button">
+            employees
+          </a>
+          <ul class="dropdown-menu" [class.show]="employeesDropdownOpen">
+            <li><a class="dropdown-item" routerLink="/add_employe" (click)="closeDropdowns()" *kaHasRoles="['ADMIN'];  ">Ajouter</a></li>
+            <li><a class="dropdown-item" routerLink="/listeGrade" (click)="closeDropdowns()" *kaHasRoles="['ADMIN'];  ">Gestion des grades</a></li>
+            <li><a class="dropdown-item" routerLink="/employe" (click)="closeDropdowns()">Lister</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/rechercheParGrade" (click)="closeDropdowns()">Recherche Par
+                Grade</a>
+            </li>
+            <li><a class="dropdown-item" routerLink="/rechercheParNom" (click)="closeDropdowns()">Recherche Par Nom</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto m-2" (click)="$event.stopPropagation()">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" [class.show]="userDropdownOpen" (click)="toggleUserDropdown()"
+            role="button">
+            {{ authenticated ? 'Logged In' : 'Guest' }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="userDropdownOpen">
+            <li><a class="dropdown-item" routerLink="/profile" (click)="closeDropdowns()">My Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            @if (!authenticated) {
+            <button class="action-item dropdown-item" (click)="login()">Login</button>
+            } @else {
+            <button class="action-item dropdown-item" (click)="logout()">Logout</button>
+            }
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</html>
+<router-outlet></router-outlet>

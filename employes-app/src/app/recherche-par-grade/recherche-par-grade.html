@@ -1,0 +1,89 @@
+<div class="container">
+  <div>
+    <label>Grade</label>
+    <select class="form-control form-control-lg" id="idCat" name="idCat" [(ngModel)]="IdGrade" (change)="onChange()">
+      @for(gra of grades; track gra.idGraEmp) {
+      <option [value]="gra.idGraEmp"> {{ gra.nomGraEmp }} - {{ gra.niveau }} </option>
+      }
+    </select>
+  </div>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <h4 class="mb-3 text-center">Liste des Employés</h4>
+
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>N°</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Poste</th>
+            <th>grade</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (employe of employes; track employe.idEmploye; let i = $index; let nbr = $count; let l = $last) {
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ employe.nomEmploye }}</td>
+            <td>{{ employe.prenomEmploye }}</td>
+            <td>{{ employe.posteEmploye }}</td>
+            <td>{{ employe.grade!.nomGraEmp }} - {{ employe.grade!.niveau }}</td>
+            <td>
+              @if (employe.imagePath) {
+              <img [src]="apiURL+'/image/loadfromFS/'+employe.idEmploye"
+                style="height: 60px; width: 80px; object-fit: contain; background-color: #f5f5f5;" class="rounded"
+                alt="Photo">
+              } @else {
+              <span class="text-muted">Aucune</span>
+              }
+            </td>
+            <td>
+              <button class="btn btn-info btn-sm me-2" (click)="employe.showDetails = !employe.showDetails">
+                {{ employe.showDetails ? 'Masquer' : 'Plus d\'infos' }}
+              </button>
+              @if(authService.isAdmin()){
+
+
+              <button class="btn btn-success btn-sm me-2"
+                [routerLink]="['/updateEmploye', employe.idEmploye]">Modifier</button>
+              <button class="btn btn-danger btn-sm" (click)="supprimerEmploye(employe)">Supprimer</button>
+              }
+            </td>
+          </tr>
+
+          <!-- Détails cachés -->
+          @if (employe.showDetails) {
+          <tr class="bg-light">
+            <td colspan="6">
+              <div class="text-start p-3">
+                <p><strong>Date d'embauche :</strong> {{ employe.dateEmbauche | date: 'dd/MM/yyyy' }}</p>
+                <p><strong>Salaire :</strong> {{ employe.salaire }} DT</p>
+                <p><strong>Email :</strong> {{ employe.email }}</p>
+                <p><strong>Téléphone :</strong> {{ employe.telephone }}</p>
+                <p><strong>Adresse :</strong> {{ employe.adresse }}</p>
+              </div>
+            </td>
+          </tr>
+          }
+
+          @if (l) {
+          <tr class="table-secondary">
+            <td colspan="6" class="text-start ps-3">
+              <strong>Total d'éléments :</strong> {{ nbr }}
+            </td>
+          </tr>
+          }
+          } @empty {
+          <tr>
+            <td colspan="6" class="text-center text-muted">Aucun employé trouvé.</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
