@@ -1,0 +1,12 @@
+.idea/
+.vscode/
+
+**/target/
+**/bin/
+**/*.log
+
+**/.git.backup/
+employee/.git.backup/
+
+.DS_Store
+Thumbs.db
